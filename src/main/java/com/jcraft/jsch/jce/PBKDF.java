@@ -8,8 +8,8 @@ modification, are permitted provided that the following conditions are met:
   1. Redistributions of source code must retain the above copyright notice,
      this list of conditions and the following disclaimer.
 
-  2. Redistributions in binary form must reproduce the above copyright 
-     notice, this list of conditions and the following disclaimer in 
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in
      the documentation and/or other materials provided with the distribution.
 
   3. The names of the authors may not be used to endorse or promote products
@@ -29,31 +29,27 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.jcraft.jsch.jce;
 
-import com.jcraft.jsch.HASH;
-
-import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.SecretKeyFactory;
-import java.security.spec.InvalidKeySpecException;
+import javax.crypto.spec.PBEKeySpec;
 import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 
-public class PBKDF implements com.jcraft.jsch.PBKDF{
-  public byte[] getKey(byte[] _pass, byte[] salt, int iterations, int size){
-    char[] pass=new char[_pass.length];
-    for(int i = 0; i < _pass.length; i++){
-      pass[i]=(char)(_pass[i]&0xff);
+public class PBKDF implements com.jcraft.jsch.PBKDF {
+    public byte[] getKey(byte[] _pass, byte[] salt, int iterations, int size) {
+        char[] pass = new char[_pass.length];
+        for (int i = 0; i < _pass.length; i++) {
+            pass[i] = (char) (_pass[i] & 0xff);
+        }
+        try {
+            PBEKeySpec spec =
+                    new PBEKeySpec(pass, salt, iterations, size * 8);
+            SecretKeyFactory skf =
+                    SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+            byte[] key = skf.generateSecret(spec).getEncoded();
+            return key;
+        } catch (InvalidKeySpecException e) {
+        } catch (NoSuchAlgorithmException e) {
+        }
+        return null;
     }
-    try {
-      PBEKeySpec spec =
-        new PBEKeySpec(pass, salt, iterations, size*8);
-      SecretKeyFactory skf =
-        SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-      byte[] key = skf.generateSecret(spec).getEncoded();
-      return key;
-    }
-    catch(InvalidKeySpecException e){
-    }
-    catch(NoSuchAlgorithmException e){
-    }
-    return null;
-  }
 }

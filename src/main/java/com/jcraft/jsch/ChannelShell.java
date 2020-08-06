@@ -8,8 +8,8 @@ modification, are permitted provided that the following conditions are met:
   1. Redistributions of source code must retain the above copyright notice,
      this list of conditions and the following disclaimer.
 
-  2. Redistributions in binary form must reproduce the above copyright 
-     notice, this list of conditions and the following disclaimer in 
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in
      the documentation and/or other materials provided with the distribution.
 
   3. The names of the authors may not be used to endorse or promote products
@@ -29,42 +29,42 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.jcraft.jsch;
 
-import java.util.*;
+public class ChannelShell extends ChannelSession {
 
-public class ChannelShell extends ChannelSession{
-
-  ChannelShell(){
-    super();
-    pty=true;
-  }
-
-  public void start() throws JSchException{
-    Session _session=getSession();
-    try{
-      sendRequests();
-
-      Request request=new RequestShell();
-      request.request(_session, this);
-    }
-    catch(Exception e){
-      if(e instanceof JSchException) throw (JSchException)e;
-      if(e instanceof Throwable)
-        throw new JSchException("ChannelShell", (Throwable)e);
-      throw new JSchException("ChannelShell");
+    ChannelShell() {
+        super();
+        pty = true;
     }
 
-    if(io.in!=null){
-      thread=new Thread(this);
-      thread.setName("Shell for "+_session.host);
-      if(_session.daemon_thread){
-        thread.setDaemon(_session.daemon_thread);
-      }
-      thread.start();
-    }
-  }
+    public void start() throws JSchException {
+        Session _session = getSession();
+        try {
+            sendRequests();
 
-  void init() throws JSchException {
-    io.setInputStream(getSession().in);
-    io.setOutputStream(getSession().out);
-  }
+            Request request = new RequestShell();
+            request.request(_session, this);
+        } catch (Exception e) {
+            if (e instanceof JSchException) {
+                throw (JSchException) e;
+            }
+            if (e instanceof Throwable) {
+                throw new JSchException("ChannelShell", (Throwable) e);
+            }
+            throw new JSchException("ChannelShell");
+        }
+
+        if (io.in != null) {
+            thread = new Thread(this);
+            thread.setName("Shell for " + _session.host);
+            if (_session.daemon_thread) {
+                thread.setDaemon(_session.daemon_thread);
+            }
+            thread.start();
+        }
+    }
+
+    void init() throws JSchException {
+        io.setInputStream(getSession().in);
+        io.setOutputStream(getSession().out);
+    }
 }

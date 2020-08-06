@@ -8,8 +8,8 @@ modification, are permitted provided that the following conditions are met:
   1. Redistributions of source code must retain the above copyright notice,
      this list of conditions and the following disclaimer.
 
-  2. Redistributions in binary form must reproduce the above copyright 
-     notice, this list of conditions and the following disclaimer in 
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in
      the documentation and/or other materials provided with the distribution.
 
   3. The names of the authors may not be used to endorse or promote products
@@ -29,23 +29,23 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package com.jcraft.jsch;
 
-class RequestShell extends Request{
-  public void request(Session session, Channel channel) throws Exception{
-    super.request(session, channel);
+class RequestShell extends Request {
+    public void request(Session session, Channel channel) throws Exception {
+        super.request(session, channel);
 
-    Buffer buf=new Buffer();
-    Packet packet=new Packet(buf);
+        Buffer buf = new Buffer();
+        Packet packet = new Packet(buf);
 
-    // send
-    // byte     SSH_MSG_CHANNEL_REQUEST(98)
-    // uint32 recipient channel
-    // string request type       // "shell"
-    // boolean want reply        // 0
-    packet.reset();
-    buf.putByte((byte) Session.SSH_MSG_CHANNEL_REQUEST);
-    buf.putInt(channel.getRecipient());
-    buf.putString(Util.str2byte("shell"));
-    buf.putByte((byte)(waitForReply() ? 1 : 0));
-    write(packet);
-  }
+        // send
+        // byte     SSH_MSG_CHANNEL_REQUEST(98)
+        // uint32 recipient channel
+        // string request type       // "shell"
+        // boolean want reply        // 0
+        packet.reset();
+        buf.putByte((byte) Session.SSH_MSG_CHANNEL_REQUEST);
+        buf.putInt(channel.getRecipient());
+        buf.putString(Util.str2byte("shell"));
+        buf.putByte((byte) (waitForReply() ? 1 : 0));
+        write(packet);
+    }
 }

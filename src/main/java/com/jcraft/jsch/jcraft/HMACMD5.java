@@ -8,8 +8,8 @@ modification, are permitted provided that the following conditions are met:
   1. Redistributions of source code must retain the above copyright notice,
      this list of conditions and the following disclaimer.
 
-  2. Redistributions in binary form must reproduce the above copyright 
-     notice, this list of conditions and the following disclaimer in 
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in
      the documentation and/or other materials provided with the distribution.
 
   3. The names of the authors may not be used to endorse or promote products
@@ -30,22 +30,24 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 package com.jcraft.jsch.jcraft;
 
 import com.jcraft.jsch.MAC;
-import java.security.*;
 
-public class HMACMD5 extends HMAC implements MAC{
-  private static final String name="hmac-md5";
+import java.security.MessageDigest;
 
-  public HMACMD5(){
-    super();
-    MessageDigest md=null;
-    try{ md=MessageDigest.getInstance("MD5"); }
-    catch(Exception e){
-      System.err.println(e);
+public class HMACMD5 extends HMAC implements MAC {
+    private static final String name = "hmac-md5";
+
+    public HMACMD5() {
+        super();
+        MessageDigest md = null;
+        try {
+            md = MessageDigest.getInstance("MD5");
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        setH(md);
     }
-    setH(md);
-  }
 
-  public String getName(){
-    return name;
-  }
+    public String getName() {
+        return name;
+    }
 }
