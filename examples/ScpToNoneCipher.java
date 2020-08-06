@@ -1,4 +1,8 @@
 /* -*-mode:java; c-basic-offset:2; indent-tabs-mode:nil -*- */
+/**
+ * This program will demonstrate how to enable none cipher.
+ *
+ */
 import com.jcraft.jsch.*;
 import java.awt.*;
 import javax.swing.*;
@@ -34,6 +38,8 @@ public class ScpToNoneCipher{
       session.rekey();
 
       // exec 'scp -t rfile' remotely
+      rfile=rfile.replace("'", "'\"'\"'");
+      rfile="'"+rfile+"'";
       String command="scp -p -t "+rfile;
       Channel channel=session.openChannel("exec");
       ((ChannelExec)channel).setCommand(command);
