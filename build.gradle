@@ -64,7 +64,7 @@ publishing {
                     developer {
                         id = 'ymnk'
                         name = 'Atsuhiko Yamanaka'
-                        email = 'ymnk at jcraft D0t com'
+                        email = 'ymnk@jcraft.com'
                     }
                     developer {
                         id = 'stefanHuber'
