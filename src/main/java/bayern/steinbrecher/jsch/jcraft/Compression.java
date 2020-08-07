@@ -29,8 +29,8 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 package bayern.steinbrecher.jsch.jcraft;
 
-import com.jcraft.jzlib.JZlib;
-import com.jcraft.jzlib.ZStream;
+import bayern.steinbrecher.jzlib.JZlib;
+import bayern.steinbrecher.jzlib.ZStream;
 
 public class Compression implements bayern.steinbrecher.jsch.Compression {
     static private final int BUF_SIZE = 4096;

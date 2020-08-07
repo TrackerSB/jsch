@@ -4,5 +4,6 @@ module bayern.steinbrecher.jsch {
     exports bayern.steinbrecher.jsch.jcraft;
     exports bayern.steinbrecher.jsch.jgss;
 
-    requires jzlib;
+    requires bayern.steinbrecher.JZlib;
+    requires java.security.jgss;
 }
